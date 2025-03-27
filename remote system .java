@@ -1,23 +1,24 @@
-import java.net.*;
+import java.net.Socket;
+
 public class PortScanner
 {
-public static void main(String args[])
-{
-int startPortRange=0;
-int stopPortRange=65365;
-for(int i=startPortRange;i<=stopPortRange;i++)
-{
-try
-{
-Socket ServerSok=new Socket("127.0.01",i);
-System.out.println("Post in use:"+i);
-ServerSok.close();
-}
-catch(Exception e)
-{
-e.printStackTrace();
-}
-System.out.println("Port not in use:"+i);
-}
-}
+    public static void main(String[] args) 
+    {
+        int startPortRange = 1; // Usually, ports 0-1023 are reserved
+        int stopPortRange = 65535;
+
+        for (int i = startPortRange; i <= stopPortRange; i++) 
+        {
+            try 
+            {
+                Socket serverSocket = new Socket("127.0.0.1", i);
+                System.out.println("Port in use: " + i);
+                serverSocket.close();
+            } catch (Exception e) 
+            {
+                // Do not print stack trace for closed ports
+                System.out.println("Port not in use: " + i);
+            }
+        }
+    }
 }
